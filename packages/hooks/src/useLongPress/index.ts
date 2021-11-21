@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import useLatest from '../useLatest';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
+import isBrowser from '../utils/isBrowser';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 type EventType = MouseEvent | TouchEvent;
@@ -11,8 +12,9 @@ export interface Options {
 }
 
 const touchSupported =
+  isBrowser &&
   // @ts-ignore
-  'ontouchstart' in window || (window.DocumentTouch && document instanceof DocumentTouch);
+  ('ontouchstart' in window || (window.DocumentTouch && document instanceof DocumentTouch));
 
 function useLongPress(
   onLongPress: (event: EventType) => void,
